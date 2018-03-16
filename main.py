@@ -148,11 +148,11 @@ class GregorianCalendar():
         """if not self.validarFecha((1,1,a)):
             return self.error"""
         self.validarBisiesto(a)
-        meses1 = "{0} Enero {0}|{0} Febrero {0}|{0} Marzo {0}  |{0} Abril {0}  |".format(" "*10)
+        meses1 = "{0}Enero{0} |{0}Febrero{1}|{0} Marzo{0}|{0} Abril{0}|".format(" "*11,10*" ")
         meses2 = "{0} Mayo {0} |{0} Julio {0}  |{0} Julio {0}  |{0} Agosto {0} |".format(" "*10)
         meses3 = "{0} Setiembre {0}|{0} Octubre {0}    |{0} Noviembre {0}  |{0} Diciembre {0}  |".format(" "*8)
         mesPrint = [meses1,meses2,meses3]
-        dias = "D   L   K   M   J   V   S  |" +"  D   L   K   M   J   V   S  |"*3
+        dias = "D   L   K   M   J   V   S   |" +"  D   L   K   M   J   V   S |"*3
         
         meses = []
         for i in range(12):
@@ -195,14 +195,31 @@ class GregorianCalendar():
         #for i in range(3):
         print(mesPrint[0])
         print(dias)
-        for s in range(1):
+        
+        for s in range(6):
+            cont = 0
             for i in range(4):
                 for d in range(7):
                     a = meses[i][s][d]
                     if a == " ":
                         a = " "*3
+                    else:
+                        l = 3 - len(str(a))
+                        a = str(a) +  " "*l
+                    cont += len(a)
                     print(a,end=" ")
-                print(" | ",end="")
+                #e = ""
+                #if d == 0 and i>1:
+                #    e += "  "
+                print("| ",end="")
+                #espacio = " "
+                #if(s>1):
+                #    espacio += " "
+                #print(cont)
+                #input()
+                #print(cont*" ","|")
+                #input()
+                #print(" | ",end="")
             print()
             
             
