@@ -139,19 +139,79 @@ class GregorianCalendar():
     def dia(self,n):
         dias = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"]
         return dias[n]
+    def incrementarDia(self,d):
+        d += 1
+        if d > 6:
+            d = 1
+        return d
+    def imprimirA(self,a):
+        """if not self.validarFecha((1,1,a)):
+            return self.error"""
+        self.validarBisiesto(a)
+        meses1 = "{0} Enero {0}|{0} Febrero {0}|{0} Marzo {0}  |{0} Abril {0}  |".format(" "*10)
+        meses2 = "{0} Mayo {0} |{0} Julio {0}  |{0} Julio {0}  |{0} Agosto {0} |".format(" "*10)
+        meses3 = "{0} Setiembre {0}|{0} Octubre {0}    |{0} Noviembre {0}  |{0} Diciembre {0}  |".format(" "*8)
+        mesPrint = [meses1,meses2,meses3]
+        dias = "D   L   K   M   J   V   S  |" +"  D   L   K   M   J   V   S  |"*3
+        
+        meses = []
+        for i in range(12):
+            m = []
+            for j in range(6):
+                m.append([" "," "," "," "," "," "," "])
+            meses.append(m)
+        
+        diaI = self.diaPrimeroEnero(a)     
+        mes = 0
+
+        #for i in meses[0]:
+        #    print(i)
+
+        while mes < 12:
+            cantD = self.diaMeses[mes]
+            semana = 0
+            dia = 1
+            while dia <= cantD:
+                if (diaI>6):
+                    diaI = 0
+                    semana += 1
+                try:
+                    meses[mes][semana][diaI] = dia
+                except:
+                    print(mes,semana,diaI)
+                    for i in meses[mes]:
+                        print(i)
+                    input()
+                dia += 1
+                diaI += 1
+
+            """print("Mes #",mes)
+            for i in meses[mes]:
+                print(i)"""
+            mes += 1
+            if (diaI>6):
+                diaI = 0
+
+        #for i in range(3):
+        print(mesPrint[0])
+        print(dias)
+        for s in range(1):
+            for i in range(4):
+                for d in range(7):
+                    a = meses[i][s][d]
+                    if a == " ":
+                        a = " "*3
+                    print(a,end=" ")
+                print(" | ",end="")
+            print()
+            
+            
+        
         
 a = GregorianCalendar()
-#print(a.diaSiguiente((2000,2)))
+a.imprimirA(2018)
 
-f1 = (2018,11,28)
-print(a.diasDesdePrimeroEnero(f1))
-#f2 = (1999,2,1)
-#print(a.diaPrimeroEnero(2018))
-#print(a.dia(a.diaPrimeroEnero(2018)))
+#f1 = (2018,11,28)
+#print(a.diasDesdePrimeroEnero(f1))
 
-#a.setFecha(f)
-#print(a.diaSiguiente(f))
-#print(type(a.fecha))
-#print(a.validarFecha(f))
-
-#print(len((1,2,3)))
+#print(a.imprimirA(2018))
