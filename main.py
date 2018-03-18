@@ -145,14 +145,14 @@ class GregorianCalendar():
             d = 1
         return d
     def imprimirA(self,a):
-        """if not self.validarFecha((1,1,a)):
-            return self.error"""
+        if not self.validarFecha((1,1,a)):
+            return self.error
         self.validarBisiesto(a)
-        meses1 = "{0}Enero{0} |{0}Febrero{1}|{0} Marzo{0}|{0} Abril{0}|".format(" "*11,10*" ")
-        meses2 = "{0} Mayo {0} |{0} Julio {0}  |{0} Julio {0}  |{0} Agosto {0} |".format(" "*10)
-        meses3 = "{0} Setiembre {0}|{0} Octubre {0}    |{0} Noviembre {0}  |{0} Diciembre {0}  |".format(" "*8)
+        meses1 = "{0}Enero{0} |{0}Febrero{1} |{0} Marzo{0} |{0} Abril{0} |".format(" "*11,10*" ")
+        meses2 = "{0} Mayo {0}  |{0} Julio {0}  |{0} Julio {0}  |{0} Agosto {0} |".format(" "*10)
+        meses3 = "{0} Setiembre  {0}|{0} Octubre {0}    |{0} Noviembre {0}  |{0} Diciembre {0}  |".format(" "*8)
         mesPrint = [meses1,meses2,meses3]
-        dias = "D   L   K   M   J   V   S   |" +"  D   L   K   M   J   V   S |"*3
+        dias = "D   L   K   M   J   V   S   | D   L   K   M   J   V   S   | D   L   K   M   J   V   S   | D   L   K   M   J   V   S   |"
         
         meses = []
         for i in range(12):
@@ -163,9 +163,6 @@ class GregorianCalendar():
         
         diaI = self.diaPrimeroEnero(a)     
         mes = 0
-
-        #for i in meses[0]:
-        #    print(i)
 
         while mes < 12:
             cantD = self.diaMeses[mes]
@@ -185,9 +182,6 @@ class GregorianCalendar():
                 dia += 1
                 diaI += 1
 
-            """print("Mes #",mes)
-            for i in meses[mes]:
-                print(i)"""
             mes += 1
             if (diaI>6):
                 diaI = 0
@@ -208,19 +202,48 @@ class GregorianCalendar():
                         a = str(a) +  " "*l
                     cont += len(a)
                     print(a,end=" ")
-                #e = ""
-                #if d == 0 and i>1:
-                #    e += "  "
                 print("| ",end="")
-                #espacio = " "
-                #if(s>1):
-                #    espacio += " "
-                #print(cont)
-                #input()
-                #print(cont*" ","|")
-                #input()
-                #print(" | ",end="")
             print()
+
+
+        #for i in range(3):
+        print(mesPrint[1])
+        print(dias)
+        
+        for s in range(6):
+            cont = 0
+            for i in range(4,8):
+                for d in range(7):
+                    a = meses[i][s][d]
+                    if a == " ":
+                        a = " "*3
+                    else:
+                        l = 3 - len(str(a))
+                        a = str(a) +  " "*l
+                    cont += len(a)
+                    print(a,end=" ")
+                print("| ",end="")
+            print()
+
+        #for i in range(3):
+        print(mesPrint[2])
+        print(dias)
+        
+        for s in range(6):
+            cont = 0
+            for i in range(8,12):
+                for d in range(7):
+                    a = meses[i][s][d]
+                    if a == " ":
+                        a = " "*3
+                    else:
+                        l = 3 - len(str(a))
+                        a = str(a) +  " "*l
+                    cont += len(a)
+                    print(a,end=" ")
+                print("| ",end="")
+            print()
+        
             
             
         
