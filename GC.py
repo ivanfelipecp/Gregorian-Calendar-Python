@@ -150,6 +150,8 @@ class GregorianCalendar():
     # Hace el llamado de la función diferencia de dias, pero antes crea una fecha en 1 de enero
     def dias_desde_primero_enero(self,fecha):
         f1 = (fecha[self.a],1,1)
+        if not self.fecha_es_valida(f1):
+            return self.error
         return self.diferenciaDias(f1,fecha)
 
     # Usa la función getDiaSemana con el primero de enero
@@ -157,11 +159,12 @@ class GregorianCalendar():
         #print(type(a))
         if type(a) != int or not self.validarA(a):
             return self.error
-        return self.dia(self.getDiaSemana((a,1,1)))
+        return self.getDiaSemana((a,1,1))
 
     # Función la cual recibe un n entre 0~6 y retorna su respectivo dia, domingo 0... lunes 1...
     def dia(self,n):
-        
+        if type(n) != int:
+            return self.error
         return self.dias[n]
 
     # Función aux que incrementa el dia
@@ -173,7 +176,7 @@ class GregorianCalendar():
 
     # Funcion que imprime el calendario, usando strings, ciclos y listas
     def imprimir_3x4(self,a):
-        if not self.fecha_es_valida((1,1,a)):
+        if not self.fecha_es_valida((a,1,1)):
             return self.error
         self.bisiesto(a)
         meses1 = "{0}Enero{0} |{0}Febrero{1} |{0} Marzo{0} |{0} Abril{0} |".format(" "*11,10*" ")
@@ -218,6 +221,7 @@ class GregorianCalendar():
                 diaI = 0
 
         # Imprime los primeros 4
+        print("Calendario del año",a,"D.C.")
         print(mesPrint[0])
         print(dias)
         

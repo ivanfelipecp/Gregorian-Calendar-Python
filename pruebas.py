@@ -7,7 +7,7 @@ fecha2 = (2018,8,12)
 fecha3 = (2019,21,50)
 fecha4 = (1,1,1)
 fecha5 = ("a","b",True)
-fecha6 = [2018,1,1]
+fecha6 = [2020,1,1]
 fechas = [fecha1,fecha2,fecha3,fecha4,fecha5,fecha6]
 
 
@@ -41,4 +41,7 @@ for i in fechas:
 
 print("\n Prueba de R5: Día primero enero")
 for i in fechas:
-    print(i[0],"-> ",gc.dia_primero_enero(i[0]))
+    print(i[0],"-> ",gc.dia(gc.dia_primero_enero(i[0])))
+
+print("\n Prueba de R6: Imprimir 3x4 con 2018")
+gc.imprimir_3x4(2018)
