@@ -2,6 +2,8 @@ class GregorianCalendar():
     # Variables auxiliares
     diaMeses = [31,28,31,30,31,30,31,31,30,31,30,31]
     dias = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"]
+    # (dia,mes)
+    feriados = [(1,1),(11,4),(1,5),(25,6),(15,8),(15,9),(25,12)]
     a = 0
     m = 1
     d = 2
@@ -115,6 +117,25 @@ class GregorianCalendar():
                 if m > 12:
                     m = 1
                     a += 1
+            return (a,m,d)
+        else:
+            return self.error
+
+        # Función que calcula el día siguiente, retorna una tupla
+    def dia_anterior(self,fecha):
+        if self.fecha_es_valida(fecha):
+            a = fecha[self.a]
+            m = fecha[self.m]
+            d = fecha[self.d]
+
+            d -=1
+            if d < 1: #self.diaMeses[m-1]:
+                m -= 1
+                d = self.diaMeses[m]
+                
+                if m < 1:
+                    m = 12
+                    a -= 1
             return (a,m,d)
         else:
             return self.error
@@ -280,3 +301,160 @@ class GregorianCalendar():
                 print("| ",end="")
             print()
         print()
+
+    # Decrementa n veces una fecha
+    def fecha_pasada(self,f,n):
+        if type(n)!=int:
+            return self.error
+
+        if not self.fecha_es_valida(f):
+            return self.error
+        
+        if n<0:
+            return self.error
+
+        while n > 0:
+            f = self.dia_anterior(f)
+            n -= 1
+        return f
+
+    # Inicio de asignación 3
+    # R7: Incrementa n veces una fecha
+    def fecha_futura(self,f,n):
+        if type(n)!=int:
+            return self.error
+
+        if not self.fecha_es_valida(f):
+            return self.error
+        
+        if n<0:
+            return self.error
+
+        while n > 0:
+            f = self.dia_siguiente(f)
+            n -= 1
+        return f
+
+    #R8: Dias entre fechas
+    def dias_entre(self,f1,f2):
+        if self.fecha_es_valida(f1) and self_fecha_es_valida(f2):
+            fecha = ()
+            if self.esMayor(f1,f2):
+                fecha = self.diferenciaDias(f1,f2)
+            else:
+                fecha = self.diferenciaDias(f2,f1)
+            return fecha
+        else:
+            return self.error
+
+    #R9: Dia de la semana
+    def dia_semana(self,f):
+        if self.fecha_es_valida(f):
+            return self.getDiaSemana(f)
+        else:
+            return self.error
+
+    # Funcion auxiliar para obtener la semana santa
+    def getCenturyMN(self,a):
+        m = 0
+        n = 0
+        if a>=1700 and a<=1799:
+            m,n = 22,2
+        elif a>=1800 and a<=1899:
+            m,n = 23,3
+        elif a>=1900 and a<=2099:
+            m,n = 24,5
+        elif a>=2100 and a<=2199:
+            m,n = 24,6
+        elif a>=2200 and a<=2299:
+            m,n = 25,0
+        if m==n==0:
+            print("ceros")
+        return m,n
+
+    def getPascua(self,a):
+        m,n = self.getCenturyMN(a)
+        A = a%19
+        b = a%4
+        c = a%7
+        d = (19*A+m)%30
+        e = (2*b+4*c+6*d+n)%7
+        # print(a,b,c,d,e)
+        fecha = ()
+        f = 0
+        if d+e < 10:
+            f = d+e+22
+            #print("cae en",d+e+22,"de marzo")
+            fecha = (a,3,f)
+
+        else:
+            f = d+e-9
+            if f == 26:
+                f = 19
+            elif f == 25 and d == 28 and e == 6 and A > 10:
+                f = 18
+            fecha = (a,4,f)
+        return fecha
+
+    def getFeriados(self,a):
+        f = self.feriados
+        pascua = self.getPascua(a)
+
+        v = self.fecha_pasada(pascua,2)
+        j = self.fecha_pasada(v,1)
+
+        f.append((v[2],v[1]))
+        f.append((j[2],j[1]))
+
+        return f
+
+    # auxiliar
+    def isHabil(self,fecha):
+        f = self.getFeriados(fecha[0])
+        return not (self.dia_semana(fecha) in [0,7]) and not ((fecha[2],fecha[1]) in f)
+    
+    #R10: (fecha_futura_habil)
+    def fecha_futura_habil(self,fecha,n):
+        if type(n) != int:
+            return self.error
+        
+        if self.fecha_es_valida(fecha) and n>=0:
+            # obtiene feriados para sacar el día hábil
+            
+            while n > 0:
+                if self.isHabil(fecha):
+                    n -= 1
+                    #if n == 0:
+                    #    return fecha
+                fecha = self.fecha_futura(fecha,1)
+            return fecha
+        else:
+            return error
+
+    #R11: (días_habiles_entre)
+    def dias_habiles_entre(self,f1,f2):
+        if self.fecha_es_valida(f1) and self.fecha_es_valida(f2):
+            a = ()
+            b = ()
+            if self.esMayor(f1,f2):
+                a = f1
+                b = f2
+            else:
+                a = f2
+                b = f1
+
+            cont = 0
+            
+            while a != b:
+                if self.isHabil(a):
+                    cont += 1
+                a = self.fecha_futura(a,1)
+            return cont
+        else:
+            return self.error
+
+
+a = GregorianCalendar()
+#f1 = (2018,4,2)
+#f2 = (2018,4,10)
+print(a.dias_habiles_entre((2018,12,23),(2018,12,30)))
