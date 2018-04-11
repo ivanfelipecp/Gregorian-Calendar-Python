@@ -35,10 +35,6 @@ for i in range(5,10):
     for j in fechas:
         print(i,"dias habiles en el futuro de",j,"->",gc.fecha_futura(j,i))
 
-print("\n Prueba de R11: Dias desde primero enero")
-for i in fechas:
-    print(i,"-> ",gc.dias_desde_primero_enero(i))
-
-print("\n Prueba de R12: Días habiles entre dos fechas")
+print("\n Prueba de R11: Días habiles entre dos fechas")
 for i in range(0,len(fechas),2):
     print("Dias habiles entre",fechas[i],"y",fechas[i+1],"->",gc.dias_habiles_entre(fechas[i],fechas[i+1]))

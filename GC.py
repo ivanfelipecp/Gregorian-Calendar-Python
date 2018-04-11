@@ -153,20 +153,13 @@ class GregorianCalendar():
     
     # Calcula la diferencia de días
     def diferenciaDias(self, f1, f2):
-        if self.fecha_es_valida(f1) and self.fecha_es_valida(f2):
-            if self.esMayor(f1,f2):
-                f = f1
-                cont = 0
-                while f != f2:
-                    f = self.dia_siguiente(f)
-                    cont += 1
-                if f2[self.a] > f1[self.a]:
-                    cont -= f2[self.a] - f1[self.a] - 1
-                return cont
-            else:
-                return self.error
-        else:
-            return self.error
+        cont = 0
+        while f1 != f2:
+            f1 = self.dia_siguiente(f1)
+            cont += 1
+            if f2[self.a] > f1[self.a]:
+                cont -= f2[self.a] - f1[self.a] - 1
+        return cont
 
     # Hace el llamado de la función diferencia de dias, pero antes crea una fecha en 1 de enero
     def dias_desde_primero_enero(self,fecha):
@@ -341,13 +334,14 @@ class GregorianCalendar():
     #R8: Dias entre fechas
     def dias_entre(self,f1,f2):
         if self.fecha_es_valida(f1) and self.fecha_es_valida(f2):
-            fecha = ()
-            if self.esMayor(f1,f2):
-                fecha = self.diferenciaDias(f1,f2)
-            else:
-                fecha = self.diferenciaDias(f2,f1)
+            if self.esMayor(f2,f1):
+                a = f1
+                f1 = f2
+                f2 = a
+            fecha = self.diferenciaDias(f1,f2)
             return fecha
         else:
+            print("aca")
             return self.error
 
     #R9: Dia de la semana
