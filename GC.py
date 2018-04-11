@@ -302,6 +302,9 @@ class GregorianCalendar():
             print()
         print()
 
+    # Inicio de asignación 3
+
+    # Función auxiliar
     # Decrementa n veces una fecha
     def fecha_pasada(self,f,n):
         if type(n)!=int:
@@ -318,7 +321,7 @@ class GregorianCalendar():
             n -= 1
         return f
 
-    # Inicio de asignación 3
+    
     # R7: Incrementa n veces una fecha
     def fecha_futura(self,f,n):
         if type(n)!=int:
@@ -337,7 +340,7 @@ class GregorianCalendar():
 
     #R8: Dias entre fechas
     def dias_entre(self,f1,f2):
-        if self.fecha_es_valida(f1) and self_fecha_es_valida(f2):
+        if self.fecha_es_valida(f1) and self.fecha_es_valida(f2):
             fecha = ()
             if self.esMayor(f1,f2):
                 fecha = self.diferenciaDias(f1,f2)
@@ -372,6 +375,7 @@ class GregorianCalendar():
             print("ceros")
         return m,n
 
+    # Funcion auxiliar para obtener la fecha de la pascua
     def getPascua(self,a):
         m,n = self.getCenturyMN(a)
         A = a%19
@@ -396,6 +400,9 @@ class GregorianCalendar():
             fecha = (a,4,f)
         return fecha
 
+    # Funcion auxiliar, que obtiene los feriados connstantes
+    # Le añade los de semana santa y los retorna
+    # Esto para usarla en dias habiles
     def getFeriados(self,a):
         f = self.feriados
         pascua = self.getPascua(a)
@@ -411,7 +418,7 @@ class GregorianCalendar():
     # auxiliar
     def isHabil(self,fecha):
         f = self.getFeriados(fecha[0])
-        return not (self.dia_semana(fecha) in [0,7]) and not ((fecha[2],fecha[1]) in f)
+        return not (self.dia_semana(fecha) in [0,6]) and not ((fecha[2],fecha[1]) in f)
     
     #R10: (fecha_futura_habil)
     def fecha_futura_habil(self,fecha,n):
@@ -434,17 +441,13 @@ class GregorianCalendar():
     #R11: (días_habiles_entre)
     def dias_habiles_entre(self,f1,f2):
         if self.fecha_es_valida(f1) and self.fecha_es_valida(f2):
-            a = ()
-            b = ()
-            if self.esMayor(f1,f2):
-                a = f1
-                b = f2
-            else:
+            a = f1
+            b = f2
+            if self.esMayor(f2,f1):
                 a = f2
                 b = f1
 
             cont = 0
-            
             while a != b:
                 if self.isHabil(a):
                     cont += 1
@@ -452,9 +455,3 @@ class GregorianCalendar():
             return cont
         else:
             return self.error
-
-
-a = GregorianCalendar()
-#f1 = (2018,4,2)
-#f2 = (2018,4,10)
-print(a.dias_habiles_entre((2018,12,23),(2018,12,30)))
